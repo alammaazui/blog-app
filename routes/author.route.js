@@ -7,9 +7,9 @@ const routes = express.Router()
 
 routes.get('/',getAuthors)
 routes.get('/:id',getAuthor)
-routes.post('/',authentication,authorization("admin"),createAuthor)
-routes.patch('/:id',authentication,authorization("author"),updateAuthor)
-routes.delete('/:id',authentication,deleteAuthor)
+routes.post('/',createAuthor)
+routes.patch('/:id',updateAuthor)
+routes.delete('/:id',deleteAuthor)
 
 
 module.exports = routes

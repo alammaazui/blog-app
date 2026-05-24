@@ -2,6 +2,7 @@
 const jwt = require('jsonwebtoken')
 const validator = require('validator')
 const bcrypt = require('bcrypt')
+const USER = require('../models/user.model')
 
 const signIn = async(req,res)=>{
 
@@ -14,12 +15,21 @@ const signIn = async(req,res)=>{
         if(!email || !password){
             return res.status(400).json({status:"error",msg:"provide complete data"})
         }
-
+        
+        const user = await USER.findOne({where :{email}})
+        if(!user){
+            
+            return res.status(400).json({status:"error",msg:"email does not exist"})
+        }
         // DB
         // db => user => email => {id , email , password, phoneNo, username}
-
-        // let isCompred = await bcrypt.compare(password,"db data")
-
+        
+        let isCompared = await bcrypt.compare(password,user.password)
+        if(!isCompared){
+            
+            return res.status(400).json({status:"error",msg:"incorrect password"})
+        }
+        
         const token = jwt.sign({email:email ,role:"admin"},"SECRETKEY",{expiresIn:"1d"})
 
         res.status(200).json({status:"success",msg:"loggedin",data:{email,token}})
@@ -74,9 +84,12 @@ const signUp = async(req,res)=>{
     
     
         // database or filesystem
+
+        const user = await USER.create({email,username,password:encryptedPassword})
+
         // 
     
-        res.status(200).json({status : "success",msg:"user successfully registered" , data:{email,username} })
+        res.status(200).json({status : "success",msg:"user successfully registered" , data:user.toJSON() })
         
     } catch (error) {
         
