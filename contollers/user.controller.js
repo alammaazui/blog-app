@@ -31,8 +31,8 @@ const signIn = async(req,res)=>{
         }
         
         const token = jwt.sign({email:email ,role:"admin"},"SECRETKEY",{expiresIn:"1d"})
-
-        res.status(200).json({status:"success",msg:"loggedin",data:{email,token}})
+        let profilePic = `http://localhost:3000/profile/${user.profile_pic}`
+        res.status(200).json({status:"success",msg:"loggedin",data:{email,token,pic :profilePic}})
         
     } catch (error) {
 
@@ -84,8 +84,8 @@ const signUp = async(req,res)=>{
     
     
         // database or filesystem
-
-        const user = await USER.create({email,username,password:encryptedPassword})
+        console.log(req.file);
+        const user = await USER.create({email,username,password:encryptedPassword,profile_pic:req.file.filename})
 
         // 
     
