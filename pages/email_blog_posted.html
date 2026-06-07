@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Blog Post is Live!</title>
+</head>
+<body style="margin:0;padding:0;background-color:#faf8f5;font-family:'Georgia',serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#faf8f5;padding:40px 0;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+
+          <!-- Header Banner -->
+          <tr>
+            <td style="background:linear-gradient(160deg,#ff6b35 0%,#f7c59f 100%);border-radius:16px 16px 0 0;padding:48px 40px 40px;text-align:center;">
+              <p style="margin:0 0 12px;color:rgba(255,255,255,0.85);font-size:12px;letter-spacing:3px;text-transform:uppercase;font-family:Arial,sans-serif;">Published Successfully</p>
+              <h1 style="margin:0 0 10px;color:#ffffff;font-size:34px;font-weight:700;line-height:1.2;">Your Blog is Live! ✍️</h1>
+              <p style="margin:0;color:rgba(255,255,255,0.85);font-size:15px;font-family:Arial,sans-serif;">The world can now read your words.</p>
+            </td>
+          </tr>
+
+          <!-- Post Preview Card -->
+          <tr>
+            <td style="background:#ffffff;padding:0 40px;">
+              <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #ebe5dc;border-radius:12px;overflow:hidden;margin:32px 0 0;">
+                <!-- Thumbnail placeholder -->
+                <tr>
+                  <td style="background:linear-gradient(135deg,#ffecd2,#fcb69f);height:160px;text-align:center;vertical-align:middle;">
+                    <p style="margin:0;font-size:48px;">📝</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:24px;">
+                    <p style="margin:0 0 6px;color:#ff6b35;font-size:11px;text-transform:uppercase;letter-spacing:2px;font-family:Arial,sans-serif;">{{post_category}}</p>
+                    <h2 style="margin:0 0 10px;color:#1a1a1a;font-size:20px;line-height:1.4;">{{post_title}}</h2>
+                    <p style="margin:0 0 16px;color:#666;font-size:14px;line-height:1.7;font-family:Arial,sans-serif;">{{post_excerpt}}</p>
+                    <p style="margin:0;color:#aaa;font-size:12px;font-family:Arial,sans-serif;">Published on {{publish_date}} · {{read_time}} min read</p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="background:#ffffff;padding:28px 40px 36px;">
+              <p style="margin:0 0 16px;color:#333;font-size:15px;line-height:1.8;font-family:Arial,sans-serif;">
+                Hi <strong>{{user_name}}</strong>, great news — your post is now publicly visible to all readers on <strong>{{app_name}}</strong>. Share it with your audience to get more reach!
+              </p>
+
+              <!-- Stats Row -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="margin:20px 0 28px;">
+                <tr>
+                  <td style="background:#fff8f5;border:1px solid #fce4d6;border-radius:10px;padding:16px;text-align:center;width:30%;">
+                    <p style="margin:0 0 4px;color:#ff6b35;font-size:22px;font-weight:bold;font-family:Arial,sans-serif;">0</p>
+                    <p style="margin:0;color:#888;font-size:11px;text-transform:uppercase;letter-spacing:1px;font-family:Arial,sans-serif;">Views</p>
+                  </td>
+                  <td style="width:4%;"></td>
+                  <td style="background:#fff8f5;border:1px solid #fce4d6;border-radius:10px;padding:16px;text-align:center;width:30%;">
+                    <p style="margin:0 0 4px;color:#ff6b35;font-size:22px;font-weight:bold;font-family:Arial,sans-serif;">0</p>
+                    <p style="margin:0;color:#888;font-size:11px;text-transform:uppercase;letter-spacing:1px;font-family:Arial,sans-serif;">Comments</p>
+                  </td>
+                  <td style="width:4%;"></td>
+                  <td style="background:#fff8f5;border:1px solid #fce4d6;border-radius:10px;padding:16px;text-align:center;width:30%;">
+                    <p style="margin:0 0 4px;color:#ff6b35;font-size:22px;font-weight:bold;font-family:Arial,sans-serif;">0</p>
+                    <p style="margin:0;color:#888;font-size:11px;text-transform:uppercase;letter-spacing:1px;font-family:Arial,sans-serif;">Likes</p>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- CTA -->
+              <table cellpadding="0" cellspacing="0" style="margin:0 auto;">
+                <tr>
+                  <td style="background:#ff6b35;border-radius:8px;margin-right:12px;">
+                    <a href="{{post_url}}" style="display:inline-block;padding:13px 32px;color:#fff;font-size:14px;text-decoration:none;font-weight:bold;font-family:Arial,sans-serif;">View Post →</a>
+                  </td>
+                  <td style="width:12px;"></td>
+                  <td style="border:2px solid #ff6b35;border-radius:8px;">
+                    <a href="{{manage_url}}" style="display:inline-block;padding:11px 24px;color:#ff6b35;font-size:14px;text-decoration:none;font-weight:bold;font-family:Arial,sans-serif;">Manage Posts</a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background:#f5ede2;border-radius:0 0 16px 16px;padding:24px 40px;text-align:center;">
+              <p style="margin:0 0 6px;color:#999;font-size:12px;font-family:Arial,sans-serif;">© {{year}} {{app_name}}. All rights reserved.</p>
+              <p style="margin:0;color:#bbb;font-size:12px;font-family:Arial,sans-serif;"><a href="{{unsubscribe_url}}" style="color:#bbb;">Unsubscribe</a> · <a href="{{privacy_url}}" style="color:#bbb;">Privacy Policy</a></p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

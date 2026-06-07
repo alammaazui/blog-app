@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Role Has Been Updated</title>
+</head>
+<body style="margin:0;padding:0;background-color:#f0f4ff;font-family:Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f0f4ff;padding:40px 0;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+
+          <!-- Header -->
+          <tr>
+            <td style="background:linear-gradient(135deg,#4a00e0 0%,#8e2de2 100%);border-radius:16px 16px 0 0;padding:48px 40px 36px;text-align:center;">
+              <div style="display:inline-block;background:rgba(255,255,255,0.15);border-radius:50%;width:70px;height:70px;line-height:70px;font-size:32px;margin-bottom:20px;">⚡</div>
+              <h1 style="margin:0 0 8px;color:#ffffff;font-size:30px;font-weight:700;letter-spacing:-0.5px;">Role Updated</h1>
+              <p style="margin:0;color:rgba(255,255,255,0.7);font-size:14px;letter-spacing:2px;text-transform:uppercase;">Access Level Changed</p>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="background:#ffffff;padding:40px;">
+              <p style="margin:0 0 18px;color:#222;font-size:16px;line-height:1.7;">Hi <strong>{{user_name}}</strong>,</p>
+              <p style="margin:0 0 28px;color:#555;font-size:15px;line-height:1.8;">
+                Your role on <strong>{{app_name}}</strong> has been updated by an administrator. Here's a summary of the change:
+              </p>
+
+              <!-- Role Change Visual -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:28px;">
+                <tr>
+                  <td style="background:#f9f9f9;border:1px solid #e8e8e8;border-radius:10px;padding:20px;text-align:center;width:40%;">
+                    <p style="margin:0 0 6px;color:#aaa;font-size:11px;text-transform:uppercase;letter-spacing:1px;">Previous Role</p>
+                    <p style="margin:0;color:#666;font-size:17px;font-weight:bold;">{{old_role}}</p>
+                  </td>
+                  <td style="text-align:center;color:#8e2de2;font-size:24px;padding:0 12px;">→</td>
+                  <td style="background:linear-gradient(135deg,#f3e8ff,#ede0ff);border:2px solid #8e2de2;border-radius:10px;padding:20px;text-align:center;width:40%;">
+                    <p style="margin:0 0 6px;color:#8e2de2;font-size:11px;text-transform:uppercase;letter-spacing:1px;">New Role</p>
+                    <p style="margin:0;color:#4a00e0;font-size:17px;font-weight:bold;">{{new_role}}</p>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Details -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #ede8ff;border-radius:10px;margin-bottom:28px;">
+                <tr style="background:#f9f5ff;">
+                  <td style="padding:14px 20px;border-bottom:1px solid #ede8ff;color:#888;font-size:12px;text-transform:uppercase;letter-spacing:1px;width:40%;">Changed By</td>
+                  <td style="padding:14px 20px;border-bottom:1px solid #ede8ff;color:#333;font-size:14px;">{{changed_by}}</td>
+                </tr>
+                <tr>
+                  <td style="padding:14px 20px;border-bottom:1px solid #ede8ff;color:#888;font-size:12px;text-transform:uppercase;letter-spacing:1px;">Date</td>
+                  <td style="padding:14px 20px;border-bottom:1px solid #ede8ff;color:#333;font-size:14px;">{{change_date}}</td>
+                </tr>
+                <tr style="background:#f9f5ff;">
+                  <td style="padding:14px 20px;color:#888;font-size:12px;text-transform:uppercase;letter-spacing:1px;">Reason</td>
+                  <td style="padding:14px 20px;color:#333;font-size:14px;">{{change_reason}}</td>
+                </tr>
+              </table>
+
+              <!-- Permissions Note -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="background:#f3e8ff;border-radius:10px;margin-bottom:28px;">
+                <tr>
+                  <td style="padding:20px 24px;">
+                    <p style="margin:0 0 10px;color:#4a00e0;font-size:14px;font-weight:bold;">🛡️ What changed with your access:</p>
+                    <p style="margin:0;color:#6a4c9c;font-size:14px;line-height:1.7;">{{permissions_note}}</p>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- CTA -->
+              <table cellpadding="0" cellspacing="0" style="margin:0 auto;">
+                <tr>
+                  <td style="background:linear-gradient(135deg,#4a00e0,#8e2de2);border-radius:8px;">
+                    <a href="{{dashboard_url}}" style="display:inline-block;padding:13px 36px;color:#fff;font-size:14px;text-decoration:none;font-weight:bold;">Go to Dashboard →</a>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin:24px 0 0;color:#aaa;font-size:13px;text-align:center;">Questions? <a href="mailto:{{support_email}}" style="color:#8e2de2;">Contact support</a></p>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background:#ede8ff;border-radius:0 0 16px 16px;padding:24px 40px;text-align:center;">
+              <p style="margin:0 0 6px;color:#999;font-size:12px;">© {{year}} {{app_name}}. All rights reserved.</p>
+              <p style="margin:0;color:#bbb;font-size:12px;"><a href="{{unsubscribe_url}}" style="color:#bbb;">Unsubscribe</a> · <a href="{{privacy_url}}" style="color:#bbb;">Privacy Policy</a></p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome – You're Registered!</title>
+</head>
+<body style="margin:0;padding:0;background-color:#0d0d0d;font-family:'Georgia',serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#0d0d0d;padding:40px 0;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+
+          <!-- Header -->
+          <tr>
+            <td style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);border-radius:16px 16px 0 0;padding:50px 40px 40px;text-align:center;">
+              <div style="display:inline-block;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:50%;width:72px;height:72px;line-height:72px;font-size:32px;margin-bottom:24px;">🎉</div>
+              <h1 style="margin:0 0 8px;color:#ffffff;font-size:32px;font-weight:400;letter-spacing:1px;">Welcome Aboard!</h1>
+              <p style="margin:0;color:#a0b4d6;font-size:15px;letter-spacing:2px;text-transform:uppercase;">Your account is ready</p>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="background:#ffffff;padding:40px;">
+              <p style="margin:0 0 20px;color:#333;font-size:16px;line-height:1.7;">Hi <strong>{{user_name}}</strong>,</p>
+              <p style="margin:0 0 20px;color:#555;font-size:15px;line-height:1.8;">
+                You've successfully registered on <strong>{{app_name}}</strong>. We're thrilled to have you with us. Your account is now active and ready to use.
+              </p>
+
+              <!-- Info Box -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="background:#f7f9fc;border-left:4px solid #0f3460;border-radius:0 8px 8px 0;margin:28px 0;">
+                <tr>
+                  <td style="padding:20px 24px;">
+                    <p style="margin:0 0 6px;color:#888;font-size:12px;text-transform:uppercase;letter-spacing:1px;">Registered Email</p>
+                    <p style="margin:0;color:#1a1a2e;font-size:15px;font-weight:bold;">{{user_email}}</p>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin:0 0 32px;color:#555;font-size:15px;line-height:1.8;">
+                Start exploring by clicking the button below. If you have any questions, our support team is always here to help.
+              </p>
+
+              <!-- CTA Button -->
+              <table cellpadding="0" cellspacing="0" style="margin:0 auto 32px;">
+                <tr>
+                  <td style="background:linear-gradient(135deg,#0f3460,#1a1a2e);border-radius:8px;">
+                    <a href="{{login_url}}" style="display:inline-block;padding:14px 40px;color:#fff;font-size:15px;text-decoration:none;letter-spacing:1px;font-family:Arial,sans-serif;">Go to Dashboard →</a>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin:0;color:#aaa;font-size:13px;text-align:center;">If you didn't register, please ignore this email.</p>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background:#f0f0f0;border-radius:0 0 16px 16px;padding:24px 40px;text-align:center;">
+              <p style="margin:0 0 6px;color:#999;font-size:12px;">© {{year}} {{app_name}}. All rights reserved.</p>
+              <p style="margin:0;color:#bbb;font-size:12px;"><a href="{{unsubscribe_url}}" style="color:#bbb;">Unsubscribe</a> · <a href="{{privacy_url}}" style="color:#bbb;">Privacy Policy</a></p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

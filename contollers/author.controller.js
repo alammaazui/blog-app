@@ -1,10 +1,12 @@
-const AUTHOR = require("../models/author.model");
+const db = require("../models");
+
+
 
 const getAuthor = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const author = await AUTHOR.findOne({ where: { id } });
+    const author = await db.author.findOne({ where: { id } });
 
     res.status(200).json({ status: "success", data: author });
   } catch (error) {
@@ -13,7 +15,7 @@ const getAuthor = async (req, res) => {
 };
 const getAuthors = async (req, res) => {
   try {
-    const authors = await AUTHOR.findAll({
+    const authors = await db.author.findAll({
         attributes:['qualification']
     });
     res.status(200).json({ status: "success", data: authors });
@@ -23,9 +25,9 @@ const getAuthors = async (req, res) => {
 };
 const createAuthor = async (req, res) => {
   try {
-    const { experience, qualification } = req.body;
+    const { experience, qualification , user_id} = req.body;
 
-    const data = await AUTHOR.create({ experience, qualification });
+    const data = await db.author.create({ experience, qualification ,user_id});
 
     res.status(200).json({ status: "success", msg: "post author", data });
   } catch (error) {
@@ -37,13 +39,13 @@ const updateAuthor = async (req, res) => {
     const { id } = req.params;
     const { experience, qualification } = req.body;
 
-    const author = await AUTHOR.findOne({where:{id}})
+    const author = await db.author.findOne({where:{id}})
     if(!author){
 
         res.status(401).json({ status: "error", msg: "incorrect author id " });
     }
 
-    const data = await AUTHOR.update(
+    const data = await db.author.update(
       { experience, qualification },
       { where: { id } },
     );
@@ -57,7 +59,7 @@ const deleteAuthor = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const data = await AUTHOR.destroy({ where: { id } });
+    const data = await db.author.destroy({ where: { id } });
 
     res.status(200).json({ status: "success", msg: "author deleted" });
   } catch (error) {

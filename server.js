@@ -3,8 +3,7 @@ require('dotenv').config()
 // dotenv.config()
 const app = require('./app');
 const sequelize = require('./config/db.config');
-const AUTHOR = require('./models/author.model');
-const USER = require('./models/user.model');
+const db = require('./models')
 
 
 // console.log(process.env);
@@ -21,13 +20,13 @@ if(process.env.NODE_ENV == "development"){
       try {
         await sequelize.authenticate();
         console.log('Connection has been established successfully.');
-        await USER.sync({force:false})
+        await db.user.sync({force:true})
         console.log('user table created successfully');
-         await AUTHOR.sync()
+         await db.author.sync({force:true})
         console.log('author table created successfully');
       } catch (error) {
         console.error('Unable to connect to the database:', error);
-      }
+      } 
       // 
   
   })();
@@ -37,9 +36,9 @@ else{
       try {
         await sequelize.authenticate();
         console.log('Connection has been established successfully.');
-        await USER.sync()
+        await db.user.sync()
         console.log('user table created successfully');
-        await AUTHOR.sync()
+        await db.author.sync()
         console.log('author table created successfully');
       } catch (error) {
         console.error('Unable to connect to the database:', error);
@@ -54,7 +53,6 @@ else{
 app.listen(port , (err)=>{
     if(err){
         console.log(`server start error : ${err.message} `);
-
     }
     console.log(`server up  port details :${port} `);
 

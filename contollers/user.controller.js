@@ -1,105 +1,138 @@
 // import module
-const jwt = require('jsonwebtoken')
-const validator = require('validator')
-const bcrypt = require('bcrypt')
-const USER = require('../models/user.model')
+const jwt = require("jsonwebtoken");
+const validator = require("validator");
+const bcrypt = require("bcrypt");
+const transporter = require("../config/mail.config");
+require('dotenv').config()
+const fs = require('fs');
+const path = require("path");
+const rootDir = require("../utils/path.utils");
+const e = require("express");
+const db = require("../models");
 
-const signIn = async(req,res)=>{
+const registerTemplatePath =  path.join(rootDir,'pages','email_registered.html') 
+const registerTemplate = fs.readFileSync(registerTemplatePath , 'utf-8')
 
-    // console.log("client is requesting signIn ...");
+// console.log("template : " , registerTemplate);
+const signIn = async (req, res) => {
+  // console.log("client is requesting signIn ...");
 
-    try {
+  try {
+    let { email, password } = req.body;
 
-        let {email,password} = req.body
-
-        if(!email || !password){
-            return res.status(400).json({status:"error",msg:"provide complete data"})
-        }
-        
-        const user = await USER.findOne({where :{email}})
-        if(!user){
-            
-            return res.status(400).json({status:"error",msg:"email does not exist"})
-        }
-        // DB
-        // db => user => email => {id , email , password, phoneNo, username}
-        
-        let isCompared = await bcrypt.compare(password,user.password)
-        if(!isCompared){
-            
-            return res.status(400).json({status:"error",msg:"incorrect password"})
-        }
-        
-        const token = jwt.sign({email:email ,role:"admin"},"SECRETKEY",{expiresIn:"1d"})
-        let profilePic = `http://localhost:3000/profile/${user.profile_pic}`
-        res.status(200).json({status:"success",msg:"loggedin",data:{email,token,pic :profilePic}})
-        
-    } catch (error) {
-
-        res.status(500).json({status:"error",msg:error.message})
-
-    }
-    
-}
-
-const signUp = async(req,res)=>{
-    
-    
-    try {
-        //data in request body  (email , username , password , phoneNo),
-        // console.log("client is requesting signUp ...");
-    
-        console.log("data : ",req.body)
-    
-        let data = req.body
-        let {email,username, password , phoneNo } = req.body
-    
-        // request data validation
-    
-        //1) email , password , username , phone must be provided
-        if(!email || !password || !username || !phoneNo){
-            // error for empty field 
-            return res.status(400).json({status: "error" , msg :"please provide details to proceed"})
-        }
-        else if (!validator.isEmail(email)){
-            
-            return res.status(400).json({status: "error" , msg :"invalid email"})
-        }
-        else if (!validator.isStrongPassword(password)){
-            
-            return res.status(400).json({status: "error" , msg :"password must contain at least one special character , uppercase lowercase "})
-            
-        }
-        else if (!validator.isAlphanumeric(username)){
-            return res.status(400).json({status: "error" , msg :"special character not allowed in username"})
-    
-        }
-    
-        let salt = await bcrypt.genSalt(10)
-    
-        let encryptedPassword = await bcrypt.hash(password,salt)
-    
-        console.log(password);
-        console.log(encryptedPassword);
-    
-    
-        // database or filesystem
-        console.log(req.file);
-        const user = await USER.create({email,username,password:encryptedPassword,profile_pic:req.file.filename})
-
-        // 
-    
-        res.status(200).json({status : "success",msg:"user successfully registered" , data:user.toJSON() })
-        
-    } catch (error) {
-        
-        res.status(500).json({status:"error" ,msg :error.message})
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ status: "error", msg: "provide complete data" });
     }
 
-}
+    const user = await db.user.findOne({ where: { email } });
+    if (!user) {
+      return res
+        .status(400)
+        .json({ status: "error", msg: "email does not exist" });
+    }
+    // DB
+    // db => user => email => {id , email , password, phoneNo, username}
 
+    let isCompared = await bcrypt.compare(password, user.password);
+    if (!isCompared) {
+      return res
+        .status(400)
+        .json({ status: "error", msg: "incorrect password" });
+    }
 
-module.exports = {signIn, signUp}
+    const token = jwt.sign({ email: email, role: "admin" }, "SECRETKEY", {
+      expiresIn: "1d",
+    });
+    let profilePic = `http://localhost:3000/profile/${user.profile_pic}`;
+    res
+      .status(200)
+      .json({
+        status: "success",
+        msg: "loggedin",
+        data: { email, token, pic: profilePic },
+      });
+  } catch (error) {
+    res.status(500).json({ status: "error", msg: error.message });
+  }
+};
 
+const signUp = async (req, res) => {
+  try {
+    //data in request body  (email , username , password , phoneNo),
+    // console.log("client is requesting signUp ...");
 
+    console.log("data : ", req.body);
 
+    let data = req.body;
+    let { email, username, password, phoneNo } = req.body;
+
+    // request data validation
+
+    //1) email , password , username , phone must be provided
+    if (!email || !password || !username || !phoneNo) {
+      // error for empty field
+      return res
+        .status(400)
+        .json({ status: "error", msg: "please provide details to proceed" });
+    } else if (!validator.isEmail(email)) {
+      return res.status(400).json({ status: "error", msg: "invalid email" });
+    } else if (!validator.isStrongPassword(password)) {
+      return res
+        .status(400)
+        .json({
+          status: "error",
+          msg: "password must contain at least one special character , uppercase lowercase ",
+        });
+    } else if (!validator.isAlphanumeric(username)) {
+      return res
+        .status(400)
+        .json({
+          status: "error",
+          msg: "special character not allowed in username",
+        });
+    }
+
+    let salt = await bcrypt.genSalt(10);
+
+    let encryptedPassword = await bcrypt.hash(password, salt);
+
+    console.log(password);
+    console.log(encryptedPassword);
+
+    // database or filesystem
+    console.log(req.file);
+    const user = await db.user.create({
+      email,
+      username,
+      password: encryptedPassword,
+      profile_pic: req.file.filename,
+    });
+
+    const mailOptions = {
+      from: process.env.SMTP_db.user,
+    //   to:email,
+      to: "fwebdev2021@gmail.com",
+      subject: "Registration Success",
+      text: "Plain text body",
+      html: registerTemplate.replace('{{user_name}}' , username).replace('{{user_email}}', email),
+    };
+
+    const info = await  transporter.sendMail(mailOptions)
+
+    console.log(info.messageId);
+
+    res
+      .status(200)
+      .json({
+        status: "success",
+        msg: "user successfully registered",
+        data: user.toJSON(),
+      });
+  } catch (error) {
+    res.status(500).json({ status: "error", msg: error.message });
+  }
+};
+
+module.exports = { signIn, signUp };

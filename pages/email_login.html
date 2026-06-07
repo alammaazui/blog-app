@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>New Login Detected</title>
+</head>
+<body style="margin:0;padding:0;background-color:#f5f5f0;font-family:Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f5f5f0;padding:40px 0;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+
+          <!-- Header -->
+          <tr>
+            <td style="background:#1b4332;border-radius:16px 16px 0 0;padding:44px 40px 36px;text-align:center;">
+              <div style="font-size:42px;margin-bottom:16px;">🔐</div>
+              <h1 style="margin:0 0 8px;color:#d8f3dc;font-size:28px;font-weight:700;letter-spacing:-0.5px;">New Login Detected</h1>
+              <p style="margin:0;color:#74c69d;font-size:14px;letter-spacing:2px;text-transform:uppercase;">Account Security Notice</p>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="background:#ffffff;padding:40px;">
+              <p style="margin:0 0 18px;color:#1b4332;font-size:16px;line-height:1.7;">Hi <strong>{{user_name}}</strong>,</p>
+              <p style="margin:0 0 28px;color:#444;font-size:15px;line-height:1.8;">
+                We noticed a new sign-in to your <strong>{{app_name}}</strong> account. Here are the details:
+              </p>
+
+              <!-- Login Details Table -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e0e0e0;border-radius:10px;overflow:hidden;margin-bottom:28px;">
+                <tr style="background:#f9fafb;">
+                  <td style="padding:14px 20px;border-bottom:1px solid #e0e0e0;color:#888;font-size:12px;text-transform:uppercase;letter-spacing:1px;width:40%;">Date & Time</td>
+                  <td style="padding:14px 20px;border-bottom:1px solid #e0e0e0;color:#222;font-size:14px;">{{login_datetime}}</td>
+                </tr>
+                <tr>
+                  <td style="padding:14px 20px;border-bottom:1px solid #e0e0e0;color:#888;font-size:12px;text-transform:uppercase;letter-spacing:1px;">IP Address</td>
+                  <td style="padding:14px 20px;border-bottom:1px solid #e0e0e0;color:#222;font-size:14px;">{{ip_address}}</td>
+                </tr>
+                <tr style="background:#f9fafb;">
+                  <td style="padding:14px 20px;border-bottom:1px solid #e0e0e0;color:#888;font-size:12px;text-transform:uppercase;letter-spacing:1px;">Device</td>
+                  <td style="padding:14px 20px;border-bottom:1px solid #e0e0e0;color:#222;font-size:14px;">{{device_info}}</td>
+                </tr>
+                <tr>
+                  <td style="padding:14px 20px;color:#888;font-size:12px;text-transform:uppercase;letter-spacing:1px;">Location</td>
+                  <td style="padding:14px 20px;color:#222;font-size:14px;">{{location}}</td>
+                </tr>
+              </table>
+
+              <!-- Warning Box -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="background:#fff3cd;border:1px solid #ffc107;border-radius:8px;margin-bottom:28px;">
+                <tr>
+                  <td style="padding:16px 20px;">
+                    <p style="margin:0;color:#856404;font-size:14px;line-height:1.6;">
+                      ⚠️ <strong>Not you?</strong> If you didn't log in, secure your account immediately by resetting your password.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Buttons -->
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td align="center" style="padding-right:8px;width:50%;">
+                    <a href="{{reset_url}}" style="display:block;background:#c0392b;color:#fff;text-align:center;padding:13px 20px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:bold;">Reset Password</a>
+                  </td>
+                  <td align="center" style="padding-left:8px;width:50%;">
+                    <a href="{{account_url}}" style="display:block;background:#1b4332;color:#fff;text-align:center;padding:13px 20px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:bold;">View Account</a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background:#e8f5e9;border-radius:0 0 16px 16px;padding:24px 40px;text-align:center;">
+              <p style="margin:0 0 6px;color:#888;font-size:12px;">© {{year}} {{app_name}}. All rights reserved.</p>
+              <p style="margin:0;color:#aaa;font-size:12px;"><a href="{{unsubscribe_url}}" style="color:#aaa;">Unsubscribe</a> · <a href="{{privacy_url}}" style="color:#aaa;">Privacy Policy</a></p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
