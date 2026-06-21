@@ -3,15 +3,19 @@ const jwt = require("jsonwebtoken");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
 const transporter = require("../config/mail.config");
-require('dotenv').config()
-const fs = require('fs');
+require("dotenv").config();
+const fs = require("fs");
 const path = require("path");
 const rootDir = require("../utils/path.utils");
 const e = require("express");
 const db = require("../models");
 
-const registerTemplatePath =  path.join(rootDir,'pages','email_registered.html') 
-const registerTemplate = fs.readFileSync(registerTemplatePath , 'utf-8')
+const registerTemplatePath = path.join(
+  rootDir,
+  "pages",
+  "email_registered.html",
+);
+const registerTemplate = fs.readFileSync(registerTemplatePath, "utf-8");
 
 // console.log("template : " , registerTemplate);
 const signIn = async (req, res) => {
@@ -46,13 +50,11 @@ const signIn = async (req, res) => {
       expiresIn: "1d",
     });
     let profilePic = `http://localhost:3000/profile/${user.profile_pic}`;
-    res
-      .status(200)
-      .json({
-        status: "success",
-        msg: "loggedin",
-        data: { email, token, pic: profilePic },
-      });
+    res.status(200).json({
+      status: "success",
+      msg: "loggedin",
+      data: { email, token, pic: profilePic },
+    });
   } catch (error) {
     res.status(500).json({ status: "error", msg: error.message });
   }
@@ -79,19 +81,15 @@ const signUp = async (req, res) => {
     } else if (!validator.isEmail(email)) {
       return res.status(400).json({ status: "error", msg: "invalid email" });
     } else if (!validator.isStrongPassword(password)) {
-      return res
-        .status(400)
-        .json({
-          status: "error",
-          msg: "password must contain at least one special character , uppercase lowercase ",
-        });
+      return res.status(400).json({
+        status: "error",
+        msg: "password must contain at least one special character , uppercase lowercase ",
+      });
     } else if (!validator.isAlphanumeric(username)) {
-      return res
-        .status(400)
-        .json({
-          status: "error",
-          msg: "special character not allowed in username",
-        });
+      return res.status(400).json({
+        status: "error",
+        msg: "special character not allowed in username",
+      });
     }
 
     let salt = await bcrypt.genSalt(10);
@@ -102,37 +100,111 @@ const signUp = async (req, res) => {
     console.log(encryptedPassword);
 
     // database or filesystem
-    console.log(req.file);
+    // console.log(req.file);
     const user = await db.user.create({
       email,
       username,
       password: encryptedPassword,
-      profile_pic: req.file.filename,
+      // profile_pic: req.file.filename,
     });
 
     const mailOptions = {
       from: process.env.SMTP_db.user,
-    //   to:email,
+      //   to:email,
       to: "fwebdev2021@gmail.com",
       subject: "Registration Success",
       text: "Plain text body",
-      html: registerTemplate.replace('{{user_name}}' , username).replace('{{user_email}}', email),
+      html: registerTemplate
+        .replace("{{user_name}}", username)
+        .replace("{{user_email}}", email),
     };
 
-    const info = await  transporter.sendMail(mailOptions)
+    const info = await transporter.sendMail(mailOptions);
+
+    console.log(info.messageId);
+
+    res.status(200).json({
+      status: "success",
+      msg: "user successfully registered",
+      data: user.toJSON(),
+    });
+  } catch (error) {
+    res.status(500).json({ status: "error", msg: error.message });
+  }
+};
+
+const forgetPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    console.log("email", email);
+    const user = await db.user.findOne({ where: { email } });
+    console.log("user", user);
+    if (!user) {
+      return res.status(401).json({ msg: "email not registered" });
+    }
+
+    const token = jwt.sign({ email: email }, "SECRETKEY", {
+      expiresIn: "5min",
+    });
+
+    const resetLink = `http://localhost:3000/api/v1/user/resetPassword/${token}`;
+
+    const info = await transporter.sendMail({
+      // from: process.env.SMTP_db.user,
+      //   to:email,
+      from: "fwebdev2021@gmail.com",
+      to: "fwebdev2021@gmail.com",
+      subject: "Reset Password Link",
+      body: resetLink,
+      html: `<a href="${resetLink}">Reset Password</a>`,
+    });
 
     console.log(info.messageId);
 
     res
       .status(200)
       .json({
-        status: "success",
-        msg: "user successfully registered",
-        data: user.toJSON(),
+        msg: "password reset link sent successfully to your registered email address",
       });
   } catch (error) {
-    res.status(500).json({ status: "error", msg: error.message });
+    res.status(500).json({ msg: error.message });
   }
 };
 
-module.exports = { signIn, signUp };
+const resetPassword = async (req, res) => {
+  try {
+    const {token} = req.params;
+    const { password } = req.body;
+
+    if(!validator.isStrongPassword(password)){
+      
+      return res.status(401).json({ status: "error", msg: "use strong password" });
+    }
+
+
+    jwt.verify(token, "SECRETKEY", async (err, decoded) => {
+      if (err) {
+        return res.status(401).json({ status: "error", msg: err.message });
+      } else {
+        email = decoded.email;
+
+        const salt = await bcrypt.genSalt(10);
+
+        const encrypted_password = await bcrypt.hash(password, salt);
+
+        const user = await db.user.update(
+          { password: encrypted_password },
+          { where: { email } },
+        );
+
+        res
+          .status(200)
+          .json({ msg: "password reset successfully", status: "success" });
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ msg: error.message, status: "error" });
+  }
+};
+
+module.exports = { signIn, signUp, forgetPassword, resetPassword };

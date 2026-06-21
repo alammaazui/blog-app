@@ -20,9 +20,9 @@ if(process.env.NODE_ENV == "development"){
       try {
         await sequelize.authenticate();
         console.log('Connection has been established successfully.');
-        await db.user.sync({force:true})
+        await db.user.sync({force:false})
         console.log('user table created successfully');
-         await db.author.sync({force:true})
+         await db.author.sync({force:false})
         console.log('author table created successfully');
       } catch (error) {
         console.error('Unable to connect to the database:', error);
